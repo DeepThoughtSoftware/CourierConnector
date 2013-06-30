@@ -113,16 +113,16 @@ function get_courier_menu() {
     $items['admin/store/integration/log']['page arguments'] = array('courier_connector_logs_form');
   }
   
-//  $items['admin/store/integration/mapping'] = array(
-//    'title' => 'Field Mappings for the integration.',
-//    'description' => 'Integration Mappings.',
-//    'page callback' => 'drupal_get_form',
-//    'access arguments' => array('access administration pages'),
-//    'page arguments' => array('courier_connector_mapping_form'),
-//    'type' => MENU_NORMAL_ITEM,
-//    'weight' => 50,
-//    'file' => 'includes/courier_connector_admin_mapping.inc',
-//  );
+  $items['admin/store/integration/mapping'] = array(
+    'title' => 'Field Mappings for the integration.',
+    'description' => 'Integration Mappings.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('access administration pages'),
+    'page arguments' => array('courier_connector_mapping_form'),
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 50,
+    'file' => 'includes/courier_connector_admin_mapping.inc',
+  );
   
 //  $items['admin/store/integration/command_queue'] = array(
 //    'title' => 'Queue Command',
@@ -352,14 +352,18 @@ function courier_connector_access($op, $args) {
 
 function get_courier_connector_theme($existing, $type, $theme, $path) {
     $theme_hooks = array(
-       'courier_connector_request_table' => array(
-       'render element' => 'form',
-       'file' => 'includes/courier_connector_admin_queue.inc',
+        'courier_connector_request_table' => array(
+          'render element' => 'form',
+          'file' => 'includes/courier_connector_admin_queue.inc',
         ), 
-//       'courier_connector_product_mapping_table' => array(
-//          'render element' => 'form',
-//          'file' => 'includes/admin.inc',
-//        ), 
+        'courier_connector_admin_request_mapping_table' => array(
+          'render element' => 'form',
+          'file' => 'includes/courier_connector_admin_mapping.inc',
+        ), 
+       'courier_connector_admin_response_mapping_table' => array(
+          'render element' => 'form',
+          'file' => 'includes/courier_connector_admin_mapping.inc',
+        ), 
 //        'courier_connector_order_table' => array(
 //           'render element' => 'form',
 //           'file' => 'includes/admin_requests.inc',
@@ -429,4 +433,12 @@ function courier_connector_get_drupal_version() {
     return $matches[1];
   
   return 6;
+}
+
+function courier_connector_install_default_mapping() {
+  
+}
+
+function courier_connector_install_tables() {
+  
 }
