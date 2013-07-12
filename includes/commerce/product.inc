@@ -3,7 +3,7 @@
 function courier_connector_commerce_process_product($responseXml)
 {
   require_once 'field_processor.inc';
-  
+   
   $objectType = (string) $responseXml->getName();
 
   //remove the _Response

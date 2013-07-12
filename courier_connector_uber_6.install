@@ -1,0 +1,19 @@
+<?php
+
+function courier_connector_uber_6_schema() {
+  return courier_connector_schema();  
+}
+ 
+function courier_connector_uber_6_install() {
+  // Create my tables.
+  drupal_install_schema('courier_connector_uber_6');
+  
+  courier_connector_install_default_mapping();
+  
+  courier_connector_install_services();
+}
+ 
+function courier_connector_uber_6_uninstall() {
+  // Drop my tables.
+  drupal_uninstall_schema('courier_connector_uber_6');
+}

@@ -61,7 +61,10 @@ function courier_connector_retrieve_requests($job_id) {
       
       courier_connector_process_request($record['job_id'], $record['request_method'], $request_parameters[COURIER_CONNECTOR_CART], $record['request_data'], $record['request_type'], $courier_requests);
       
-      $courier_requests["attrs"] = array("job_id" => $record['job_id'], "job_number" => $job_number);           
+      $courier_requests["attrs"] = array("job_id" => $record['job_id'], "job_number" => $job_number);  
+      
+      //store the last time this event occured
+      variable_set("courier_last_" . $record['request_method'] . '_' . $record['request_type'], date( 'm/d/Y H:i:s', time()));
     }
 
     if(courier_connector_get_drupal_version() == '6') {

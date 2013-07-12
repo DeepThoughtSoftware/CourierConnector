@@ -1,0 +1,23 @@
+<?php
+
+function courier_connector_commerce_7_schema() {
+  return courier_connector_schema();  
+}
+ 
+function courier_connector_commerce_7_install() {
+  // Create my tables.
+  //drupal_install_schema('courier_connector_commerce_7');
+  
+  courier_connector_install_manual_tables();
+  
+  courier_connector_install_default_mapping();
+  
+  courier_connector_install_services();
+  
+  courier_connector_install_qb_id();
+}
+ 
+function courier_connector_commerce_7_uninstall() {
+  // Drop my tables.
+  drupal_uninstall_schema('courier_connector_commerce_7');
+}

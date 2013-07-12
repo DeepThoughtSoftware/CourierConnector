@@ -12,16 +12,27 @@ function courier_connector_commerce_7_rules_action_info() {
   return get_courier_connector_rules_action_info();
 }
 
+function courier_connector_read_items_cycle() {
+  
+  $item_type = variable_get('courier_connector_item_type', 'ItemInventory');
+  
+  $from_date = variable_get("courier_last_{$item_type}_read", "1/1/2001");
+  
+  courier_connector_read_items($from_date);    
+}
+
 function courier_connector_read_items($from_date) {
   $item_type = variable_get("courier_connector_item_type", "ItemInventory");
           
-  $req = array();  
+  if($from_date == '') {
+    $from_date  = "1/1/2001";
+  }
    
   db_insert('courier_requests') 
               ->fields(array(
                 'request_type' => 'read',
                 'request_method' => $item_type,
-                'request_data' => serialize(array("TimeModified"=>"1/1/2001"))
+                'request_data' => serialize(array("TimeModified"=>$from_date))
               ))
               ->execute();
 }
