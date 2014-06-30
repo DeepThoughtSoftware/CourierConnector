@@ -232,16 +232,9 @@ function get_courier_connector_services_resources() {
       'access arguments' => array('view'),
       'access arguments append' => TRUE,
       'args' => array(          
-          array(
-              'name' => 'job_id',
-              'optional' => TRUE,
-              'source' => array('path' => '0'),
-              'description' => '',
-              'type' => 'int',
-            ), 
       ),
     ),   
-    'create' => array(
+    'update' => array(
       'help' => 'Create a response to a request',      
       'file' => array('type' => 'inc', 'module' => 'courier_connector_uber_7', 'name' => 'includes/courier_connector_create_responses'),      
       'callback' => 'courier_connector_create_responses',
@@ -305,7 +298,7 @@ function get_courier_connector_services_resources() {
 }
 
 function get_courier_connector_rest_server_request_parsers_alter(&$parsers) {
-  $parsers['text/xml'] = "CourierXMLResponseParser::parseXML";
+  $parsers['text/xml'] = "CourierXMLResponseParser";
 }
  
 
@@ -697,7 +690,7 @@ db_query("INSERT INTO `courier_mapping_to_salesorder_request` (`to_salesorder_re
  }
 
 function courier_connector_install_services() {
-  db_query('INSERT INTO `services_endpoint` (`eid`, `name`, `server`, `path`, `authentication`, `server_settings`, `resources`, `debug`) VALUES (1, "service", "rest_server", "service", "a:0:{}\', 0x613A303A7B7D, \'a:1:{s:16:"CourierConnector";a:1:{s:10:"operations";a:3:{s:6:"create";a:1:{s:7:"enabled";s:1:"1";}s:6:"update";a:1:{s:7:"enabled";s:1:"1";}s:5:"index";a:1:{s:7:"enabled";s:1:"1";}}}}", 0);');
+  //db_query('INSERT INTO `services_endpoint` (`eid`, `name`, `server`, `path`, `authentication`, `server_settings`, `resources`, `debug`) VALUES (1, "service", "rest_server", "service", "a:0:{}\', 0x613A303A7B7D, \'a:1:{s:16:"CourierConnector";a:1:{s:10:"operations";a:3:{s:6:"create";a:1:{s:7:"enabled";s:1:"1";}s:6:"update";a:1:{s:7:"enabled";s:1:"1";}s:5:"index";a:1:{s:7:"enabled";s:1:"1";}}}}", 0);');
 }
 
 //install the quickbooks_id field and assign to all the items

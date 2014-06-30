@@ -1,6 +1,6 @@
 <?php
 
-function courier_connector_create_responses($response, $job_id, $job_date, $status, $record_count, $number_of_chunks, $chunk_number) {
+function courier_connector_create_responses($response_xml, $job_id, $job_date, $status, $record_count, $number_of_chunks, $chunk_number) {
   
   if(courier_connector_get_drupal_version() == "6") {
     
@@ -14,7 +14,7 @@ function courier_connector_create_responses($response, $job_id, $job_date, $stat
         'record_count' => $record_count,
         'number_of_chunks' => $number_of_chunks,
         'chunk_number' => $chunk_number,
-        'response_xml' => $response,        
+        'response_xml' => $response_xml,        
       ))
       ->execute();
 

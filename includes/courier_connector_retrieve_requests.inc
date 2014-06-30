@@ -4,13 +4,13 @@
 //object - the object that is being passed in
 //anything else will be looked up on the mapping
 
-function courier_connector_retrieve_requests($job_id) {
+function courier_connector_retrieve_requests() {
   require_once 'courier_connector_mapping.inc';
 
   //if a job id is passed in here then that triggers the processing of any xml in the reponse table for that job that needs to be processed
-  if(!is_null($job_id)) {
+  if(array_key_exists("job_id", $_GET)) {
     require_once 'courier_connector_process_responses.inc';
-    return courier_connector_process_response($job_id);
+    return courier_connector_process_response($_GET['job_id']);
   }
   
   $request_parameters = file_get_contents(drupal_get_path('module', 'courier_connector_uber_7') . "/includes/" . "request_parameters.json");
@@ -33,7 +33,7 @@ function courier_connector_retrieve_requests($job_id) {
   }
   $job_number = 0;
   
-  $jobs['key'] = 'job_request';
+  //$jobs['key'] = 'job_request';
   
   foreach($job_ids as $job_id) {  
         
@@ -61,7 +61,8 @@ function courier_connector_retrieve_requests($job_id) {
       
       courier_connector_process_request($record['job_id'], $record['request_method'], $request_parameters[COURIER_CONNECTOR_CART], $record['request_data'], $record['request_type'], $courier_requests);
       
-      $courier_requests["attrs"] = array("job_id" => $record['job_id'], "job_number" => $job_number);  
+      $courier_requests["job_id"] = $record['job_id'];
+      $courier_requests["job_number"] = $job_number;  
       
       //store the last time this event occured
       variable_set("courier_last_" . $record['request_method'] . '_' . $record['request_type'], date( 'm/d/Y H:i:s', time()));
@@ -98,7 +99,7 @@ function courier_connector_retrieve_requests($job_id) {
   $return_value = array();
   
   if(count($jobs) > 0) {
-    $return_value['attrs'] = array("job_count" => count($jobs) - 1);
+    $return_value = array("job_count" => count($jobs));
     $return_value['courier_requests'] = $jobs;
   }   
   
@@ -114,6 +115,12 @@ function courier_connector_process_request($job_id, $object_type, $parameters, $
     
     foreach($data as $k => $v) {
       if(!empty($v)) {
+        
+        //drupal supplied a unix time stamp, the connector requries datetime
+        if($k == "TimeModified") {
+          $v = date("Y-m-d H:i:s", $v);
+        }  
+          
         $requests_queued[$object_type . "_Request"][$k] = $v;
       }
     }   
