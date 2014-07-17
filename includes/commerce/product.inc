@@ -178,10 +178,18 @@ function courier_connector_commerce_process_product($responseXml)
              }         
 
              foreach ($field_config_data as $field => $value)
-             {                    
+             {       
                $new_field_value = courier_connector_map_value($objectType . "_response", $field, $quickbooks_item_record);
-               
-               $commerce_product_record->$field = courier_connector_process_field($new_field_value, $field, $value->type);
+
+               if($field == "commerce_price") {
+                 $commerce_product_record->commerce_price['und'][0]['amount'] = $new_field_value * 100;
+               }
+               else if ($field == "commerce_stock") {
+                 $commerce_product_record->commerce_stock['und'][0]['value']= $new_field_value;
+               }
+               else {
+                $commerce_product_record->$field = courier_connector_process_field($new_field_value, $field, $value->type);
+               }
              }
              
              //These values are ever present so not found in the field config             

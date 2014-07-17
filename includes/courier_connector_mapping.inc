@@ -35,6 +35,8 @@ function courier_connector_get_mapped_field_list($type, $filter = null) {
 
 function courier_connector_map_value($type, $to_field, $record) {
   
+  $type = strtolower($type);
+  
   $mapped_fields = array();
   
   if (courier_connector_get_drupal_version() == "6") {
@@ -49,6 +51,8 @@ function courier_connector_map_value($type, $to_field, $record) {
     $query->condition("map_to.to_field", $to_field);
     $query->orderBy("sort_order", "ASC");
 
+    $x = (string)$query;
+    
     $mapped_fields = $query->execute();
   }
   

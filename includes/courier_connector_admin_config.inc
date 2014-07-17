@@ -41,8 +41,8 @@ function courier_connector_config_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('QuickBooks Item Type'),
     '#description' => t('The type of item that will be used when products from the site are downloaded into QuickBooks.'),
-    '#options' => array("InventoryItem" => "Inventory Item", "NonInventoryItem" => "Non Inventory Item", "ServiceItem" => "Service Item", "DiscountItem" => "Discount Item"),
-    '#default_value' => 'InventoryItem',   
+    '#options' => array("ItemInventory" => "Inventory Item", "NonInventoryItem" => "Non Inventory Item", "ServiceItem" => "Service Item", "DiscountItem" => "Discount Item"),
+    '#default_value' => 'ItemInventory',   
   );
   
   if(!is_null($item_type))
