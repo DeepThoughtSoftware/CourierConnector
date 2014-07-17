@@ -35,7 +35,7 @@ function courier_connector_get_mapped_field_list($type, $filter = null) {
 
 function courier_connector_map_value($type, $to_field, $record) {
   
-  $type = strtolower($type);
+  //$type = strtolower($type);
   
   $mapped_fields = array();
   
